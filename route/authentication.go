@@ -1,6 +1,7 @@
 package route
 
 import "time"
+import "sync"
 import "net/http"
 import "encoding/json"
 import "github.com/donatien513/Contact-Me-Flow/utils"
@@ -27,16 +28,23 @@ func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
   }
 
   var emailPendingKey string = utils.GenerateEmailPendingKey()
-  writePendingEmailErr := writePendingEmail(&emailPendingKey, &emailData)
-  if writePendingEmailErr != nil {
-    httpFailure(w, http.StatusInternalServerError)
-    return
-  }
-  emailDeliveryError := utils.RequestEmailDelivery(&emailData)
-  if emailDeliveryError != nil {
-    httpFailure(w, http.StatusInternalServerError)
-    return 
-  }
+  var waitGroup sync.WaitGroup
+  waitGroup.Add(2)
+  go func () {
+    storePendingEmail(&emailPendingKey, &emailData)
+    waitGroup.Done()
+  }()
+  go func () {
+    authEmailTemplateRequest := types.AuthEmailTemplateRequest{}
+    authEmailTemplateRequest.EmailPendingKey = emailPendingKey
+    authEmail, _ := utils.GetAuthEmailTemplate(&authEmailTemplateRequest)
+    emailDeliveryData := types.EmailDelivery{}
+    emailDeliveryData.Recipients = []string{emailData.Sender}
+    emailDeliveryData.Body = authEmail
+    utils.RequestEmailDelivery(emailDeliveryData)
+    waitGroup.Done()
+  }()
+  waitGroup.Wait()
   w.WriteHeader(http.StatusOK)
   w.Header().Set("Content-Type", "text/plain")
   w.Write([]byte(emailPendingKey))
@@ -50,7 +58,7 @@ func httpFailure(w http.ResponseWriter, httpStatusCode int) {
 
 
 // Store pending email data to Redis
-func writePendingEmail(emailPendingKey *string, emailData *types.EmailPendingRequest) error {
+func storePendingEmail(emailPendingKey *string, emailData *types.EmailPendingRequest) error {
   pipe := utils.RedisClient.TxPipeline()
   pipe.HSet(*emailPendingKey, "Sender", (*emailData).Sender);
   pipe.HSet(*emailPendingKey, "Message", (*emailData).Message);
