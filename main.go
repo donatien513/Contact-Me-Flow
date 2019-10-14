@@ -5,6 +5,6 @@ import "github.com/donatien513/Contact-Me-Flow/route"
 import "github.com/donatien513/Contact-Me-Flow/utils"
 
 utils.InitRedisClient()
-Handler := httprouter.New()
+var Handler := httprouter.New()
 Handler.POST("/", route.HeartbeatHandler)
 Handler.POST("/ask-send", route.AuthentificationHandler)
