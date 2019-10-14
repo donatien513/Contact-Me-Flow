@@ -8,8 +8,8 @@
     }
   ],
   "routes": [
-    { "src": "/", "dest": "index.html" },
-    { "src": "/([^/]+)", "dest": "main.go" }
+    { "src": "/([^/]+)", "dest": "main.go" },
+    { "src": "/", "dest": "/index.html" }
   ],
   "env": {
     "validation_host": "@validation_host",
