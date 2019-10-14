@@ -1,7 +1,6 @@
 package routes
 
 import "net/http"
-import "io/ioutil"
 
 func HeartbeatHandler(w http.ResponseWriter, r *http.Request) {
   w.WriteHeader(http.StatusOK)
