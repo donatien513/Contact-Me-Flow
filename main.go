@@ -1,10 +1,18 @@
 package Handler
 
-import "github.com/julienschmidt/httprouter"
+import "net/http"
 import "github.com/donatien513/Contact-Me-Flow/route"
 import "github.com/donatien513/Contact-Me-Flow/utils"
 
-utils.InitRedisClient()
-var Handler := httprouter.New()
-Handler.POST("/", route.HeartbeatHandler)
-Handler.POST("/ask-send", route.AuthentificationHandler)
+func Handler(w http.ResponseWriter, r *http.Request) {
+  utils.InitRedisClient()
+  if r.URL.Path == "/" && r.Method == http.MethodGet {
+    route.HeartbeatHandler(w, r)
+    return
+  }
+  if r.URL.Path == "/ask-send" && r.Method == http.MethodPost {
+    route.AuthentificationHandler(w, r)
+    return
+  }
+  http.NotFound(w, r)
+}
