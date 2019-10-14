@@ -1,14 +1,14 @@
 package utils
 
 import "github.com/go-redis/redis/v7"
-import "github.com/donatien513/Contact-Me-Flow/utils"
+import "github.com/donatien513/Contact-Me-Flow/config"
 
 var RedisClient *redis.Client
 
 func InitRedisClient() {
   client := redis.NewClient(&redis.Options{
-    Addr:     utils.redisAddr,
-    Password: utils.redisPass, // no password set
+    Addr:     config.redisAddr,
+    Password: config.redisPass, // no password set
     DB:       0,  // use default DB
   })
 

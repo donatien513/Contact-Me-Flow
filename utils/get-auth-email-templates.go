@@ -5,19 +5,19 @@ import "io/ioutil"
 import "net/http"
 import "net/url"
 import "encoding/json"
+import "github.com/donatien513/Contact-Me-Flow/config"
 
 func GetAuthEmailTemplate(emailPendingKey *string) (string, error) {
   jsonBytes := new(bytes.Buffer)
   validationLink := makeValidationLink(emailPendingKey)
-  print(validationLink)
   postData := map[string]string{"validationLink": validationLink}
   jsonEncoder := json.NewEncoder(jsonBytes)
   jsonEncoder.Encode(postData)
-  req, reqInitErr := http.NewRequest("POST", templateAuthURL, jsonBytes)
+  req, reqInitErr := http.NewRequest("POST", config.templateAuthURL, jsonBytes)
   if reqInitErr != nil {
     return "", reqInitErr
   }
-  req.Header.Add("Authorization", emailSenderAuthToken)
+  req.Header.Add("Authorization", config.emailSenderAuthToken)
   req.Header.Add("Content-Type", "application/json")
   resp, reqExecuteErr := httpClient.Do(req)
   if reqExecuteErr != nil {
@@ -33,7 +33,7 @@ func GetAuthEmailTemplate(emailPendingKey *string) (string, error) {
 
 
 func makeValidationLink(emailPendingKey *string) string {
-  baseUrl, _ := url.Parse(validationHost)
+  baseUrl, _ := url.Parse(config.validationHost)
   baseUrl.Path = "/send"
   params := url.Values{}
   params.Add("key", *emailPendingKey)
