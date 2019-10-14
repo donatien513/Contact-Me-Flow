@@ -13,11 +13,11 @@ func GetAuthEmailTemplate(emailPendingKey *string) (string, error) {
   postData := map[string]string{"validationLink": validationLink}
   jsonEncoder := json.NewEncoder(jsonBytes)
   jsonEncoder.Encode(postData)
-  req, reqInitErr := http.NewRequest("POST", config.templateAuthURL, jsonBytes)
+  req, reqInitErr := http.NewRequest("POST", config.TemplateAuthURL, jsonBytes)
   if reqInitErr != nil {
     return "", reqInitErr
   }
-  req.Header.Add("Authorization", config.emailSenderAuthToken)
+  req.Header.Add("Authorization", config.EmailSenderAuthToken)
   req.Header.Add("Content-Type", "application/json")
   resp, reqExecuteErr := httpClient.Do(req)
   if reqExecuteErr != nil {
@@ -33,7 +33,7 @@ func GetAuthEmailTemplate(emailPendingKey *string) (string, error) {
 
 
 func makeValidationLink(emailPendingKey *string) string {
-  baseUrl, _ := url.Parse(config.validationHost)
+  baseUrl, _ := url.Parse(config.ValidationHost)
   baseUrl.Path = "/send"
   params := url.Values{}
   params.Add("key", *emailPendingKey)
