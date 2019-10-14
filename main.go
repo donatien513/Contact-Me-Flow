@@ -10,5 +10,5 @@ func Handler() http.HandlerFunc {
   router := mux.NewRouter()
   router.HandleFunc("/", route.HeartbeatHandler).Methods("POST")
   router.HandleFunc("/ask-send", route.AuthentificationHandler).Methods("POST")
-  return router
+  return http.Handle("/", router)
 }
