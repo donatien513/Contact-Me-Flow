@@ -5,7 +5,7 @@ require (
 	github.com/go-playground/universal-translator v0.16.0 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.4
 	github.com/golang/protobuf v1.3.2 // indirect
-	github.com/gorilla/mux v1.7.3 // indirect
+	github.com/gorilla/mux v1.7.3
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/onsi/ginkgo v1.10.2 // indirect
 	github.com/onsi/gomega v1.7.0 // indirect
@@ -19,3 +19,5 @@ require (
 	gopkg.in/go-playground/validator.v9 v9.30.0
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
+
+go 1.13
