@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "name": "go",
+  "public": true,
+  "builds": [
+    {
+      "src": "*.go",
+      "use": "@now/go"
+    }
+  ],
+  "routes": [
+    { "src": "/", "dest": "main.go" }
+  ],
+  "env": {
+    "validation_host": "@validation_host",
+    "template_auth_url": "@template_auth_url",
+    "email_sender_url": "@email_sender_url",
+    "email_sender_auth_token": "@email_sender_auth_token"
+  }
+}

@@ -3,13 +3,16 @@ package utils
 import "bytes"
 import "io/ioutil"
 import "net/http"
+import "net/url"
 import "encoding/json"
-import "github.com/donatien513/Contact-Me-Flow/types"
 
-func GetAuthEmailTemplate(authEmailTemplateRequest *types.AuthEmailTemplateRequest) (string, error) {
+func GetAuthEmailTemplate(emailPendingKey *string) (string, error) {
   jsonBytes := new(bytes.Buffer)
+  validationLink := makeValidationLink(emailPendingKey)
+  print(validationLink)
+  postData := map[string]string{"validationLink": validationLink}
   jsonEncoder := json.NewEncoder(jsonBytes)
-  jsonEncoder.Encode(authEmailTemplateRequest)
+  jsonEncoder.Encode(postData)
   req, reqInitErr := http.NewRequest("POST", templateAuthURL, jsonBytes)
   if reqInitErr != nil {
     return "", reqInitErr
@@ -28,3 +31,12 @@ func GetAuthEmailTemplate(authEmailTemplateRequest *types.AuthEmailTemplateReque
   return bodyString, nil
 }
 
+
+func makeValidationLink(emailPendingKey *string) string {
+  baseUrl, _ := url.Parse(validationHost)
+  baseUrl.Path = "/send"
+  params := url.Values{}
+  params.Add("key", *emailPendingKey)
+  baseUrl.RawQuery = params.Encode()
+  return baseUrl.String()
+}

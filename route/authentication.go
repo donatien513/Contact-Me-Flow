@@ -35,9 +35,7 @@ func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
     waitGroup.Done()
   }()
   go func () {
-    authEmailTemplateRequest := types.AuthEmailTemplateRequest{}
-    authEmailTemplateRequest.EmailPendingKey = emailPendingKey
-    authEmail, _ := utils.GetAuthEmailTemplate(&authEmailTemplateRequest)
+    authEmail, _ := utils.GetAuthEmailTemplate(&emailPendingKey)
     emailDeliveryData := types.EmailDelivery{}
     emailDeliveryData.Recipients = []string{emailData.Sender}
     emailDeliveryData.Body = authEmail
