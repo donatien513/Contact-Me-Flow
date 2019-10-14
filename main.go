@@ -1,4 +1,4 @@
-package main
+package Handler
 
 import "net/http"
 import "github.com/gorilla/mux"
