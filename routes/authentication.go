@@ -7,8 +7,6 @@ import "encoding/json"
 import "github.com/donatien513/Contact-Me-Flow/utils"
 import "github.com/donatien513/Contact-Me-Flow/types"
 
-var authWaitDuration time.Duration = time.Minute * 1
-
 func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
   if r.Body == nil {
     httpFailure(w, http.StatusBadRequest)
@@ -31,7 +29,7 @@ func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
   var waitGroup sync.WaitGroup
   waitGroup.Add(2)
   go func () {
-    storePendingEmail(&emailPendingKey, &emailData)
+    utils.StorePendingEmail(&emailPendingKey, &emailData)
     waitGroup.Done()
   }()
   go func () {
@@ -51,16 +49,4 @@ func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
 // Handle Http response failure
 func httpFailure(w http.ResponseWriter, httpStatusCode int) {
   http.Error(w, http.StatusText(httpStatusCode), httpStatusCode)
-}
-
-
-
-// Store pending email data to Redis
-func storePendingEmail(emailPendingKey *string, emailData *types.EmailPendingRequest) error {
-  pipe := utils.RedisClient.TxPipeline()
-  pipe.HSet(*emailPendingKey, "Sender", (*emailData).Sender);
-  pipe.HSet(*emailPendingKey, "Message", (*emailData).Message);
-  pipe.Expire(*emailPendingKey, authWaitDuration);
-  _, err := pipe.Exec()
-  return err
 }

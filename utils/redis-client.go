@@ -3,7 +3,7 @@ package utils
 import "github.com/go-redis/redis/v7"
 import "github.com/donatien513/Contact-Me-Flow/config"
 
-var RedisClient *redis.Client
+var redisClient *redis.Client
 
 func InitRedisClient() {
   client := redis.NewClient(&redis.Options{
@@ -17,5 +17,5 @@ func InitRedisClient() {
   	panic(err)
   	return
   }
-  RedisClient = client
+  redisClient = client
 }
