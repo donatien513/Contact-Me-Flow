@@ -11,7 +11,7 @@ var httpClient = &http.Client{}
 func RequestEmailDelivery(emailDeliveryData types.EmailDelivery) error {
   jsonBytes := new(bytes.Buffer)
   jsonEncoder := json.NewEncoder(jsonBytes)
-  jsonEncoder.Encode(config.EmailDeliveryData)
+  jsonEncoder.Encode(emailDeliveryData)
   req, reqInitErr := http.NewRequest("POST", config.EmailSenderURL, jsonBytes)
   if reqInitErr != nil {
     return reqInitErr
