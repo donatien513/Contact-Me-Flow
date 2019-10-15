@@ -3,9 +3,18 @@
   "name": "go",
   "builds": [
     { "src": "*.go", "use": "@now/go" },
-    { "src": "*.html", "use": "@now/static" }
+    { "src": "*.html", "use": "@now/static" },
+    { "src": "options.txt", "use": "@now/static" }
   ],
   "routes": [
+    { "src": "/.*",
+      "methods": ["OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Origin": "*"
+      },
+      "dest": "/options.txt"
+    },
     { "src": "/([^/]+)", "dest": "main.go" },
     { "src": "/", "dest": "/index.html" },
     { "src": "/", "dest": "/index.html" }
