@@ -2,6 +2,7 @@ package utils
 
 import "net/http"
 import "github.com/tomasen/realip"
+import "github.com/dpapathanasiou/go-recaptcha"
 import "github.com/donatien513/Contact-Me-Flow/config"
 
 func VerifyRecaptcha(r *http.Request) bool {
@@ -10,7 +11,7 @@ func VerifyRecaptcha(r *http.Request) bool {
   if responseFound {
     result, err := recaptcha.Confirm(clientIP, recaptchaResponse)
     if err != nil {
-      log.Println("recaptcha server error", err)
+      return false
     }
     return result
   }
