@@ -10,5 +10,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
     routes.AuthentificationHandler(w, r)
     return
   }
+  if r.URL.Path == "/send" && r.Method == http.MethodPost {
+    routes.DirectSendHandler(w, r)
+    return
+  }
   http.NotFound(w, r)
 }

@@ -8,4 +8,4 @@ var EmailSenderURL string = os.Getenv("email_sender_url")
 var EmailSenderAuthToken string = os.Getenv("email_sender_auth_token")
 var RedisAddr string = os.Getenv("redis_addr")
 var RedisPass string = os.Getenv("redis_pass")
-
+var MyEmailAddress string = os.Getenv("my_email_address")
