@@ -8,19 +8,19 @@ import "github.com/donatien513/Contact-Me-Flow/types"
 
 func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
   if r.Body == nil {
-    utils.httpFailure(w, http.StatusBadRequest)
+    utils.HttpFailure(w, http.StatusBadRequest)
     return
   }
   decoder := json.NewDecoder(r.Body)
   var emailData types.EmailPendingRequest
   decodeErr := decoder.Decode(&emailData)
   if decodeErr != nil {
-    utils.httpFailure(w, http.StatusBadRequest)
+    utils.HttpFailure(w, http.StatusBadRequest)
     return
   }
 
   if emailData.Sender == "" || emailData.Message == "" {
-    utils.httpFailure(w, http.StatusBadRequest)
+    utils.HttpFailure(w, http.StatusBadRequest)
     return
   }
 
