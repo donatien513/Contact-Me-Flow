@@ -7,7 +7,7 @@
     { "src": "options.txt", "use": "@now/static" }
   ],
   "routes": [
-    { "src": "/.*",
+    { "src": "/([^/]+)",
       "methods": ["OPTIONS"],
       "headers": {
         "Access-Control-Allow-Headers": "*",
