@@ -11,7 +11,7 @@ func DirectSendHandler(w http.ResponseWriter, r *http.Request) {
     utils.HttpFailure(w, http.StatusBadRequest)
     return
   }
-  if utils.VerifyRecaptcha(r) == true {
+  if utils.VerifyRecaptcha(r) == false {
     utils.HttpFailure(w, http.StatusUnauthorized)
     return
   }
