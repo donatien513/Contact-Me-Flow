@@ -26,6 +26,7 @@
     "email_sender_auth_token": "@email_sender_auth_token",
     "redis_addr": "@redis_addr",
     "redis_pass": "@redis_pass",
-    "my_email_address": "@my_email_address"
+    "my_email_address": "@my_email_address",
+    "recaptcha_secret_key": "@recaptcha_secret_key"
   }
 }

@@ -11,6 +11,10 @@ func AuthentificationHandler(w http.ResponseWriter, r *http.Request) {
     utils.HttpFailure(w, http.StatusBadRequest)
     return
   }
+  if utils.VerifyRecaptcha(r) == true {
+    utils.HttpFailure(w, http.StatusUnauthorized)
+    return
+  }
   decoder := json.NewDecoder(r.Body)
   var emailData types.EmailPendingRequest
   decodeErr := decoder.Decode(&emailData)

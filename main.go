@@ -6,6 +6,7 @@ import "github.com/donatien513/Contact-Me-Flow/utils"
 
 func Handler(w http.ResponseWriter, r *http.Request) {
   utils.InitRedisClient()
+  utils.InitRecaptcha()
   if r.URL.Path == "/ask-send" && r.Method == http.MethodPost {
     routes.AuthentificationHandler(w, r)
     return
