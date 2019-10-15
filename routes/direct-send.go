@@ -26,7 +26,7 @@ func DirectSendHandler(w http.ResponseWriter, r *http.Request) {
 
   emailDeliveryData := types.EmailDelivery{}
   emailDeliveryData.Recipients = []string{config.MyEmailAddress}
-  emailDeliveryData.Body = emailData.Sender + ":<br /><br />" emailData.Message
+  emailDeliveryData.Body = emailData.Sender + ":<br /><br />" + emailData.Message
   utils.RequestEmailDelivery(emailDeliveryData)
   w.WriteHeader(http.StatusOK)
   w.Header().Set("Content-Type", "text/plain")
