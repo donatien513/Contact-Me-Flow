@@ -1,5 +1,6 @@
 package utils
 
+import "time"
 import "github.com/donatien513/Contact-Me-Flow/types"
 
 var authWaitDuration time.Duration = time.Minute * 1

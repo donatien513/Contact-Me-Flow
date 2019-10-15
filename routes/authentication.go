@@ -1,6 +1,5 @@
 package routes
 
-import "time"
 import "sync"
 import "net/http"
 import "encoding/json"
