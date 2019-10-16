@@ -15,7 +15,14 @@
       },
       "dest": "/options.txt"
     },
-    { "src": "/([^/]+)", "dest": "main.go" },
+    {
+      "src": "/([^/]+)",
+      "headers": {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Origin": "*"
+      },
+      "dest": "main.go"
+    },
     { "src": "/", "dest": "/index.html" },
     { "src": "/", "dest": "/index.html" }
   ],
